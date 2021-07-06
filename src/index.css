@@ -1,4 +1,6 @@
-*,:after,:before {
+*,
+:after,
+:before {
   box-sizing: border-box;
 }
 
@@ -12,11 +14,9 @@ input {
   margin: 0;
 }
 
-
 .form {
   position: relative;
 }
-
 
 .form-control {
   display: block;
@@ -31,8 +31,16 @@ input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border-radius: .25rem;
-  transition: border-color .15s ease-in-out;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.form-control ::selection {
+  background: none;
+}
+/* For Mozilla Firefox */
+.form-control::-moz-selection {
+  background: none;
 }
 
 .form-control:focus {
@@ -43,8 +51,8 @@ input {
 .form-control__box {
   position: absolute;
   z-index: 1000;
-  min-width: 100%;
-  height: 284px;
+  max-height: 250px;
+  width: 100%;
   overflow: auto;
   padding: 8px 0;
   margin-top: 4px;
@@ -53,8 +61,8 @@ input {
   text-align: left;
   list-style: none;
   background-color: #fff;
-  border: 1px solid rgba(0,0,0,.15);
-  border-radius: .25rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
 }
 
 .form-control__item {
@@ -67,10 +75,10 @@ input {
   white-space: nowrap;
   background-color: transparent;
   border: 0;
-  cursor: pointer;
 }
 
-.form-control__item:hover {
+.form-control__item[data-focus='true'] {
   background-color: #e63946;
   color: #fff;
+  cursor: pointer;
 }
