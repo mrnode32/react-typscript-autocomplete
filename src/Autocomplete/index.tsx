@@ -1,12 +1,23 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
+import Highlighter from 'react-highlight-words';
 import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import {Country} from '../data';
 
-type Props = {
-  data: Country[];
-};
+interface IHighlightProps {
+  children: React.ReactNode;
+}
 
-function Autocomplete(props: Props): JSX.Element {
+interface IAutocompleteIProps {
+  data: Country[];
+}
+
+// By default this component uses an HTML Mark Text element (<strong>) to wrap matched text.
+const Highlight: FunctionComponent<IHighlightProps> = function(props) {
+  const { children } = props;
+  return <strong>{children}</strong>;
+}
+
+function Autocomplete(props: IAutocompleteIProps) {
   const {data} = props;
 
   const [value, setValue] = React.useState<string>('');
@@ -45,7 +56,8 @@ function Autocomplete(props: Props): JSX.Element {
     getInputProps,
     getListboxProps,
     getOptionProps,
-    groupedOptions
+    groupedOptions,
+    inputValue
   } = useAutocomplete({
     id: 'form-control',
     options: data,
@@ -81,9 +93,17 @@ function Autocomplete(props: Props): JSX.Element {
             {...getListboxProps()}
           >
             {groupedOptions.map((option, index) => {
+              const HighlighterJSX = (
+                <Highlighter
+                  searchWords={[inputValue]}
+                  autoEscape={true}
+                  textToHighlight={option.name}
+                  highlightTag={Highlight}
+                />
+              );
               return (
                 <li {...getOptionProps({option, index})} {...listItem}>
-                  <div>{option.name}</div>
+                  {HighlighterJSX}
                 </li>
               );
             })}
