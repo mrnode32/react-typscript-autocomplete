@@ -1,6 +1,7 @@
 import React from 'react';
 import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import {Country} from '../data';
+import Highlight from './Highlight';
 
 type Props = {
   data: Country[];
@@ -83,7 +84,7 @@ function Autocomplete(props: Props): JSX.Element {
             {groupedOptions.map((option, index) => {
               return (
                 <li {...getOptionProps({option, index})} {...listItem}>
-                  <div>{option.name}</div>
+                  <Highlight search={value} text={option.name} />
                 </li>
               );
             })}
